@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewBag.Title = "Rent Your Boat";
+}
+
+<h2>RentingYourBoat</h2>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Form</title>
+</head>
+
+<body>
+
+    <fieldset>
+        <legend>Add Customer</legend>
+        <div>
+            <label for="BoatName">Boat Name:</label>
+            <input id="Boatnameid" type="text" name="BoatName" value="" />
+        </div>
+        <div>
+            <label for="ContactNo">Contact No:</label>
+            <input id="Contactid" type="text" name="ContactNo" value="" />
+        </div>
+        <div>
+            <label for="HourlyRate">Hourly Rate:</label>
+            <input id="Rateid" type="text" name="HourlyRate" value="" />
+        </div>
+        <div>
+            <label>&nbsp;</label>
+            <input type="submit" value="Submit" class="submit" onclick="Save();" />
+        </div>
+    </fieldset>
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <script type="text/javascript">
+        function Save() {
+     $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    BoatName: $('#Boatnameid').val(), ContactNo: $('#Contactid').val(), rate: $('#Rateid').val()
+                },
+
+                url: '@Url.Action("SaveBoatDetails", "Home")',
+                success: function (data) {
+                    if (data == "1") {
+                        alert("boat on rent posted succesfully");
+                           location.href = '@Url.Action("BoatLandingPage", "Home")';
+                    }
+                    else
+                        alert("error in posting your boat on rent");
+         }
+                ,Error: function () {
+                    alert("error in posting your boat on rent");
+         }
+            });
+        }
+
+    </script>
+</body>
+</html>
+
